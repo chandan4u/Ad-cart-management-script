@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <title>Product Offer</title>
+    <style>
+        .card {
+            background: #fff;
+            border-radius: 2px;
+            display: inline-table; 
+            margin: 1rem;
+            padding: 50px;
+            margin-top: 0px; 
+            position: relative;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        .title {
+            font-size: 32px;
+            text-align: center;
+        }
+
+        select {
+            border: 5px solid black;
+            font-size: 20px;
+            width: 300px;
+            height: 50px;
+        }
+
+        .smt-btn {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 50px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 70px; 
+        }
+    </style>
+
+    <script>
+
+        function productCount(id) {
+            let num = document.getElementsByClassName(id)[0].innerHTML
+            document.getElementsByClassName(id)[0].innerHTML = parseInt(num) + 1
+            document.getElementsByClassName(id)[1].value = parseInt(num) + 1
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <div class="card" onclick="productCount('classic')">
+        <div class="title">Classic Ad</div>
+        <h3 style="text-align:center">$269.99</h3>
+        <h4 style="text-align:center" class="classic">0</h4>
+        <p style="color:cornflowerblue">Click here to increase count</p>
+    </div>
+    <div class="card" onclick="productCount('standout')">
+        <div class="title">Standout Ad</div>
+        <h3 style="text-align:center">$322.99</h3>
+        <h4 style="text-align:center" class="standout">0</h4>
+        <p style="color:cornflowerblue">Click here to increase count</p>
+    </div>
+    <div class="card" onclick="productCount('premium')">
+        <div class="title">Premium Ad</div>
+        <h3 style="text-align:center">$394.99</h3>
+        <h4 style="text-align:center" class="premium">0</h4>
+        <p style="color:cornflowerblue">Click here to increase count</p>
+    </div>
+    <form name="product" method="post" action="/product-offer" style="margin-left:250px; margin-top: 80px;">
+        <input type="hidden" class="classic" value="0" name="classic">
+        <input type="hidden" class="standout" value="0" name="standout">
+        <input type="hidden" class="premium" value="0" name="premium">
+        <select name="type" style="display: inline-block;">
+            <option value="Default">Default</option>
+            <option value="UNILEVER">UNILEVER</option>
+            <option value="APPLE">APPLE</option>
+            <option value="NIKE">NIKE</option>
+            <option value="FORD">FORD</option>
+        </select>
+        <br />
+        <input type="submit" class="smt-btn" name="smt">
+    </form>
+    <div id="resultSet">
+        <% if(resultSet !== null) { %>
+        <h3>Result ::</h3>
+        <b>Customer :: </b>
+        <%= resultSet.customer %>
+        <br />
+        <b>SKUs Scanned :: </b>
+        <%= resultSet.idAdded %>
+        <br />
+        <b>Total expected :: </b> $
+        <%= resultSet.totalExpected %>
+        <% } %>
+        <% if(errorMsg !== null) { %>
+        <b>Error Message :: </b>
+        <%= errorMsg.message %>
+        <% } %>
+    </div>
+</body>
+
+</html>
